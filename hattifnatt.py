@@ -245,7 +245,9 @@ def push(chat, patterns):
 		observer.join()
 
 
-if __name__ == '__main__':
+# Command-line tool
+
+def main():
 	from os       import environ
 	from sys      import argv, exit, stderr
 	from telegram import Bot
@@ -263,3 +265,6 @@ if __name__ == '__main__':
 		exit(1)
 
 	push(Bot(token=TOKEN).get_chat(CHAT), patterns)
+
+if __name__ == '__main__':
+	main()
