@@ -4,7 +4,7 @@
 from collections        import namedtuple
 from hashlib            import sha256
 from io                 import BufferedReader, RawIOBase
-from queue              import SimpleQueue as Queue
+from queue              import Queue
 from sys                import intern
 from pathtools.patterns import match_path
 from os                 import scandir
