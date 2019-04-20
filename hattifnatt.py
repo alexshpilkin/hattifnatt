@@ -12,6 +12,8 @@ from os.path            import basename
 from watchdog.events    import PatternMatchingEventHandler
 from watchdog.observers import Observer
 
+__all__ = ['push']
+
 
 # Locking
 
