@@ -210,12 +210,14 @@ def push(chat, patterns):
 
 			oldnames = set(files.keys())
 			newnames = set(actual.keys())
-			new = newnames - oldnames
 			old = oldnames - newnames
+			new = newnames - oldnames
 			for name in oldnames & newnames:
 				if files[name].digest != actual[name]:
 					old.add(name)
 					new.add(name)
+			# order doesn't matter for old
+			new = sorted(new, reverse=True)
 
 			while True:
 				if old:
