@@ -7,7 +7,7 @@ with open('README.rst', 'r') as fp:
 
 setup(
 	name='hattifnatt',
-	version='0.1.1',
+	version='0.2.0',
 	author='Alexander Shpilkin',
 	author_email='ashpilkin@gmail.com',
 	description='Push directory to Telegram channel',
