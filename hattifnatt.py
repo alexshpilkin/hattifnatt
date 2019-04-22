@@ -200,12 +200,14 @@ def push(chat, patterns):
 			observer.start()
 
 			actual = dict()
+			mtimes = dict()
 			for entry in scandir():
 				if (not entry.is_file() or
 				    not match_path(entry.name, patterns,
 				                   case_sensitive=True) or
 				    entry.name == JOURNAL):
 					continue
+				mtimes[entry.name] = entry.stat().st_mtime_ns
 				actual[entry.name] = readdigest(entry.name)
 
 			oldnames = set(files.keys())
@@ -217,7 +219,7 @@ def push(chat, patterns):
 					old.add(name)
 					new.add(name)
 			# order doesn't matter for old
-			new = sorted(new, reverse=True)
+			new = sorted(new, key=mtimes.__getitem__, reverse=True)
 
 			while True:
 				if old:
