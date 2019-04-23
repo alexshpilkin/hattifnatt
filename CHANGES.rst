@@ -10,6 +10,15 @@ Interface changes
   traceback when trying to start a second instance of ``hat`` in the
   same directory.
 
+Code changes
+~~~~~~~~~~~~
+* The upload timeout is increased to 120 seconds in order to avoid
+  triggering `python-telegram-bot/python-telegram-bot#533`_.  The
+  underlying cause remains unclear.
+
+.. _python-telegram-bot/python-telegram-bot#533:
+   https://github.com/python-telegram-bot/python-telegram-bot/issues/533
+
 0.2.0 (2019-04-22)
 ------------------
 

@@ -145,7 +145,7 @@ def create(chat, name):
 		return
 	with BufferedReader(dig) as buf:
 		print('create {}'.format(name), flush=True)
-		msg  = chat.send_document(buf, filename=name)
+		msg  = chat.send_document(buf, filename=name, timeout=120)
 		file = File(msg.message_id, dig.hexdigest())
 		print('upload {} ({}, {})'.format(name, file.id, file.digest),
 		      flush=True)
