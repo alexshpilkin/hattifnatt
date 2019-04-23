@@ -253,6 +253,7 @@ def push(chat, patterns):
 
 def main():
 	from os       import environ
+	from os.path  import splitext
 	from sys      import argv, exit, stderr
 	from telegram import Bot
 
@@ -268,7 +269,13 @@ def main():
 		print('error: no chat id in environment', file=stderr)
 		exit(1)
 
-	push(Bot(token=TOKEN).get_chat(CHAT), patterns)
+	try:
+		push(Bot(token=TOKEN).get_chat(CHAT), patterns)
+	except BlockingIOError:
+		print('error: an instance of {} is already running'
+		      .format(splitext(basename(argv[0]))[0]),
+		      file=stderr)
+		exit(1)
 
 if __name__ == '__main__':
 	main()

@@ -1,6 +1,15 @@
 Changes
 =======
 
+Unreleased
+----------
+
+Interface changes
+~~~~~~~~~~~~~~~~~
+* A meaningful error message is now output instead of an exception
+  traceback when trying to start a second instance of ``hat`` in the
+  same directory.
+
 0.2.0 (2019-04-22)
 ------------------
 
