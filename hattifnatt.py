@@ -4,11 +4,11 @@
 from collections        import namedtuple
 from hashlib            import sha256
 from io                 import BufferedReader, RawIOBase
-from queue              import Queue
-from sys                import intern
-from pathtools.patterns import match_path
 from os                 import scandir
 from os.path            import basename
+from pathtools.patterns import match_path
+from queue              import Queue
+from sys                import intern
 from watchdog.events    import PatternMatchingEventHandler
 from watchdog.observers import Observer
 
