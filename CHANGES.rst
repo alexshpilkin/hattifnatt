@@ -1,6 +1,14 @@
 Changes
 =======
 
+Unreleased
+----------
+
+Code changes
+~~~~~~~~~~~~
+* Handling of ^C interrupts is now more reliable and should not violate
+  invariants even if an interrupt occurs at an inopportune moment.
+
 0.2.1 (2019-04-23)
 ------------------
 

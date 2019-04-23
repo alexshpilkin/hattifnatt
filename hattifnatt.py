@@ -3,11 +3,13 @@
 
 from collections        import namedtuple
 from hashlib            import sha256
+from inspect            import currentframe
 from io                 import BufferedReader, RawIOBase
 from os                 import scandir
 from os.path            import basename
 from pathtools.patterns import match_path
 from queue              import Queue
+from signal             import SIG_DFL, SIGINT, default_int_handler, signal
 from sys                import intern
 from watchdog.events    import PatternMatchingEventHandler
 from watchdog.observers import Observer
@@ -195,6 +197,12 @@ def push(chat, patterns):
 		handler = Handler(queue, patterns)
 		observer = Observer()
 
+		done = False
+		def interrupt(signum, frame):
+			nonlocal done; done = True
+			queue.put((CREATE, JOURNAL))  # dummy iteration
+
+		sigint = None
 		observer.schedule(handler, '.', recursive=False)
 		try:
 			observer.start()
@@ -221,7 +229,8 @@ def push(chat, patterns):
 			# order doesn't matter for old
 			new = sorted(new, key=mtimes.__getitem__, reverse=True)
 
-			while True:
+			sigint = signal(SIGINT, interrupt)
+			while not done:
 				if old:
 					type, name = DELETE, old.pop()
 				elif new:
@@ -241,12 +250,13 @@ def push(chat, patterns):
 					save(journal, name, file)
 					if file is not None:
 						files[name] = file
-		except KeyboardInterrupt:
-			pass
 		finally:
 			observer.stop()
+			if sigint is not None:
+				signal(SIGINT, sigint)
 
 		observer.join()
+		sigint(SIGINT, currentframe())
 
 
 # Command-line tool
@@ -276,6 +286,8 @@ def main():
 		      .format(splitext(basename(argv[0]))[0]),
 		      file=stderr)
 		exit(1)
+	except KeyboardInterrupt:
+		pass
 
 if __name__ == '__main__':
 	main()
